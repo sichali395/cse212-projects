@@ -1,4 +1,4 @@
-﻿public class PriorityQueue
+﻿public class PriorityQueue  // Should be public
 {
     private List<PriorityItem> _queue = new();
 
@@ -24,14 +24,17 @@
 
         // Find the index of the item with the highest priority to remove
         var highPriorityIndex = 0;
-        for (int index = 1; index < _queue.Count - 1; index++)
+        for (int index = 1; index < _queue.Count; index++) // Fixed: removed -1
         {
-            if (_queue[index].Priority >= _queue[highPriorityIndex].Priority)
+            // Only update if we find a strictly higher priority
+            if (_queue[index].Priority > _queue[highPriorityIndex].Priority)
                 highPriorityIndex = index;
+            // If priorities are equal, keep the first one (don't update index)
         }
 
         // Remove and return the item with the highest priority
         var value = _queue[highPriorityIndex].Value;
+        _queue.RemoveAt(highPriorityIndex); // Fixed: Actually remove the item
         return value;
     }
 
@@ -43,12 +46,12 @@
     }
 }
 
-internal class PriorityItem
+public class PriorityItem  // Changed from internal to public
 {
-    internal string Value { get; set; }
-    internal int Priority { get; set; }
+    public string Value { get; set; }  // Changed from internal to public
+    public int Priority { get; set; }  // Changed from internal to public
 
-    internal PriorityItem(string value, int priority)
+    public PriorityItem(string value, int priority)  // Changed from internal to public
     {
         Value = value;
         Priority = priority;

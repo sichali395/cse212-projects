@@ -1,5 +1,7 @@
-﻿public static class DisplaySums {
-    public static void Run() {
+﻿public static class DisplaySums
+{
+    public static void Run()
+    {
         DisplaySumPairs([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
         // Should show something like (order does not matter):
         // 6 4
@@ -27,7 +29,26 @@
     /// in the list.
     /// </summary>
     /// <param name="numbers">array of integers</param>
-    private static void DisplaySumPairs(int[] numbers) {
+    private static void DisplaySumPairs(int[] numbers)
+    {
         // TODO Problem 2 - This should print pairs of numbers in the given array
+        // Using a HashSet for O(1) lookups to achieve O(n) time complexity
+        HashSet<int> seenNumbers = new HashSet<int>();
+
+        foreach (int num in numbers)
+        {
+            // Calculate the number needed to sum to 10
+            int complement = 10 - num;
+
+            // If we've already seen the complement, we found a valid pair
+            if (seenNumbers.Contains(complement))
+            {
+                // Display the pair with larger number first for consistency
+                Console.WriteLine($"{Math.Max(num, complement)} {Math.Min(num, complement)}");
+            }
+
+            // Add the current number to the set for future lookups
+            seenNumbers.Add(num);
+        }
     }
 }
